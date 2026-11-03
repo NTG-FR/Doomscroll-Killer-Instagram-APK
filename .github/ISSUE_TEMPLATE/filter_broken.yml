@@ -1,0 +1,39 @@
+name: Filter broken
+description: Something should be hidden but isn't (Reels, Explore, ads…), or a filter hides too much.
+title: "[Filter] "
+labels: ["filter", "instagram-change"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Instagram changes its website often. Thanks for reporting! The more precise, the faster the fix.
+        **Do not paste personal information** (usernames, messages) in this issue.
+  - type: textarea
+    id: what
+    attributes:
+      label: What do you see?
+      description: Which page, and what shows up (or disappears) that shouldn't.
+      placeholder: "On the home feed, Reels from accounts I follow open full screen…"
+    validations:
+      required: true
+  - type: input
+    id: language
+    attributes:
+      label: Instagram language
+      placeholder: English
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: App version
+      description: Settings → About → Version
+      placeholder: 1.0.0
+    validations:
+      required: true
+  - type: textarea
+    id: capture
+    attributes:
+      label: Page capture (optional)
+      description: Settings → Developer → Developer mode, open the page, then Page captures → Copy. Remove anything personal before pasting.
+      render: text

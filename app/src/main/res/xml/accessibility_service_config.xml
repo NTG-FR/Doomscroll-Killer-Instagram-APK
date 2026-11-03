@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Accessibility service configuration.
+  - packageNames: the service only hears about the official Instagram app.
+  - typeWindowStateChanged: we only need to know when Instagram comes to the foreground.
+  - canRetrieveWindowContent="false": the service CANNOT read what is on screen.
+-->
+<accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
+    android:accessibilityEventTypes="typeWindowStateChanged"
+    android:accessibilityFeedbackType="feedbackGeneric"
+    android:canRetrieveWindowContent="false"
+    android:description="@string/accessibility_description"
+    android:notificationTimeout="100"
+    android:packageNames="com.instagram.android" />
