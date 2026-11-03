@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Doomscroll Killer</string>
+
+    <!-- System services -->
+    <string name="accessibility_label">Doomscroll Killer – Instagram redirect</string>
+    <string name="accessibility_description">Sends you to Doomscroll Killer\'s distraction-free feed whenever the official Instagram app opens. This service only knows WHEN Instagram opens: it cannot read your screen, and nothing is sent anywhere.</string>
+    <string name="notification_relay_label">Doomscroll Killer – Instagram notifications</string>
+    <string name="channel_messages">Instagram messages</string>
+    <string name="channel_activity">Instagram activity</string>
+
+    <!-- Common -->
+    <string name="action_continue">Continue</string>
+    <string name="action_back">Back</string>
+    <string name="action_skip">Skip</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_fix">Fix</string>
+    <string name="action_open_settings">Open settings</string>
+    <string name="status_done">Done</string>
+
+    <!-- Onboarding -->
+    <string name="onb_welcome_title">Take back your feed</string>
+    <string name="onb_welcome_body">Instagram, without the endless scroll. Keep what matters: the people you follow and your messages.</string>
+    <string name="onb_feature_following">Only the people you follow</string>
+    <string name="onb_feature_following_desc">Your feed opens on \"Following\", newest first. No algorithm.</string>
+    <string name="onb_feature_no_reels">No Reels, no Explore, no ads</string>
+    <string name="onb_feature_no_reels_desc">Removed before they even appear: nothing to scroll past.</string>
+    <string name="onb_feature_notifications">Your notifications still work</string>
+    <string name="onb_feature_notifications_desc">Messages and activity arrive as usual and open here.</string>
+
+    <string name="onb_how_title">How it works</string>
+    <string name="onb_how_web">Doomscroll Killer shows instagram.com in a protected view and strips out everything built to keep you scrolling.</string>
+    <string name="onb_how_app_title">The official app</string>
+    <string name="onb_how_app">The official Instagram app stays installed, out of sight, only to receive notifications. If it opens, you are sent back here.</string>
+    <string name="onb_how_privacy">Private by design: no account, no server, no tracking. Your login stays on your phone.</string>
+    <string name="onb_how_open_source">Open source (GPL-3.0): anyone can check what it does.</string>
+
+    <string name="onb_setup_title">Set up protection</string>
+    <string name="onb_setup_body">A few permissions so the redirect and notifications work. You can change them later in Settings.</string>
+
+    <string name="onb_done_title">You\'re all set</string>
+    <string name="onb_done_body">Log in to Instagram once and you\'re good to go. Tip: hide the official Instagram app\'s icon so you never open it by habit.</string>
+    <string name="onb_done_button">Log in to Instagram</string>
+
+    <!-- Setup checklist -->
+    <string name="setup_redirect_title">Redirect service</string>
+    <string name="setup_redirect_desc">Accessibility service that sends you here whenever Instagram opens.</string>
+    <string name="setup_redirect_stopped">Your phone stopped it. Turn it off and on again in Accessibility settings.</string>
+    <string name="setup_restricted_hint">Switch greyed out? Open App info → ⋮ (top right) → \"Allow restricted settings\", then try again.</string>
+    <string name="setup_restricted_button">App info</string>
+    <string name="setup_notif_access_title">Read Instagram notifications</string>
+    <string name="setup_notif_access_desc">Lets Doomscroll Killer take over Instagram\'s notifications.</string>
+    <string name="setup_post_notif_title">Show notifications</string>
+    <string name="setup_post_notif_desc">Allows Doomscroll Killer to display them.</string>
+    <string name="setup_battery_title">Run in the background</string>
+    <string name="setup_battery_desc">Stops your phone from putting the redirect to sleep.</string>
+    <string name="setup_no_instagram_title">Instagram app not installed</string>
+    <string name="setup_no_instagram_desc">The feed works without it. Install it (and hide its icon) only if you want notifications.</string>
+
+    <string name="disclosure_title">Accessibility permission</string>
+    <string name="disclosure_body">Doomscroll Killer uses Android\'s accessibility service for one thing: noticing when the official Instagram app opens, so it can send you to the distraction-free feed instead.\n\nIt cannot read what is on your screen, it only listens to Instagram, and nothing ever leaves your phone.\n\nOn the next screen, open \"Doomscroll Killer – Instagram redirect\" and turn it on.</string>
+
+    <!-- Device tips -->
+    <string name="tips_title">Tips for %1$s phones</string>
+    <string name="tips_title_generic">Tips for your phone</string>
+    <string name="tips_full_guide">Full guide for your phone</string>
+    <string name="tips_xiaomi">• Settings → Apps → Doomscroll Killer AND Instagram: turn on Autostart, set Battery saver to \"No restrictions\".\n• Lock Doomscroll Killer in Recents (long-press its card → lock icon) so it is not cleared.\n• Hide Instagram\'s icon: Security app → App lock → ⚙ → Hidden apps.</string>
+    <string name="tips_samsung">• Settings → Battery → Background usage limits: add Doomscroll Killer and Instagram to \"Never sleeping apps\".\n• Hide Instagram\'s icon: Home screen settings → Hide apps on Home and Apps screens.</string>
+    <string name="tips_huawei">• Settings → Battery → App launch: set Doomscroll Killer and Instagram to \"Manage manually\" with everything allowed.\n• Hide Instagram\'s icon by moving it to a folder, or use PrivateSpace.</string>
+    <string name="tips_oneplus">• Settings → Battery → Battery optimization: set Doomscroll Killer and Instagram to \"Don\'t optimize\".\n• Hide Instagram\'s icon: open the app drawer → ⋮ → Hidden space.</string>
+    <string name="tips_oppo">• Settings → Battery → App battery management: allow background activity and auto-launch for Doomscroll Killer and Instagram.\n• Hide Instagram\'s icon: Settings → Privacy → Hide apps.</string>
+    <string name="tips_vivo">• Settings → Battery → Background power consumption: allow high usage for Doomscroll Killer and Instagram.\n• Hide Instagram\'s icon by moving it to a folder.</string>
+    <string name="tips_other">• Remove Instagram\'s icon from your home screen (long-press → Remove, not Uninstall) or put it in a folder: it stays installed for notifications.</string>
+
+    <!-- Feed -->
+    <string name="feed_status_ok">Protection on</string>
+    <string name="feed_status_attention">Protection needs attention</string>
+    <string name="feed_banner_attention">Some protections are off. Tap to fix.</string>
+    <string name="feed_error_title">Can\'t reach Instagram</string>
+    <string name="feed_error_body">Check your connection and try again.</string>
+    <string name="feed_retry">Try again</string>
+    <string name="feed_reel_blocked">Reels are blocked</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_status_ok_title">You\'re protected</string>
+    <string name="settings_status_ok_body">The Instagram app redirects here and notifications are relayed.</string>
+    <string name="settings_status_attention_title">Action needed</string>
+    <string name="settings_status_attention_body">Some protections are off. Fix the items below.</string>
+    <string name="settings_section_setup">Setup</string>
+    <string name="settings_section_instagram">Instagram</string>
+    <string name="settings_section_phone">Your phone</string>
+    <string name="settings_section_about">About</string>
+    <string name="settings_section_developer">Developer</string>
+    <string name="settings_redirect">Redirect the Instagram app</string>
+    <string name="settings_redirect_desc">Turn off to use the official app for a while (e.g. to post a Reel).</string>
+    <string name="settings_relay">Relay notifications</string>
+    <string name="settings_relay_desc">Instagram notifications show up here and open the right conversation.</string>
+    <string name="settings_reload">Reload feed</string>
+    <string name="settings_logout">Log out of Instagram</string>
+    <string name="settings_logout_confirm">Log out of Instagram in Doomscroll Killer? You will need to log in again.</string>
+    <string name="settings_logout_action">Log out</string>
+    <string name="settings_version">Version</string>
+    <string name="settings_source">Source code</string>
+    <string name="settings_source_desc">GitHub · GPL-3.0</string>
+    <string name="settings_report">Report a problem</string>
+    <string name="settings_report_desc">Instagram changed something? Open an issue.</string>
+    <string name="settings_privacy">Privacy</string>
+    <string name="settings_privacy_desc">No account, no server, no analytics. Internet is only used to load instagram.com.</string>
+    <string name="settings_developer_mode">Developer mode</string>
+    <string name="settings_developer_mode_desc">Saves page captures to update the filtering rules. Uses a bit more battery.</string>
+    <string name="settings_captures">Page captures</string>
+    <string name="settings_onboarding">Show the introduction again</string>
+
+    <!-- Developer captures -->
+    <string name="debug_title">Page captures</string>
+    <string name="debug_empty">No capture yet. Turn on developer mode, then browse the feed: a capture of the page is saved every few seconds.</string>
+    <string name="debug_copy">Copy</string>
+    <string name="debug_clear">Clear</string>
+    <string name="debug_copied">Copied</string>
+</resources>

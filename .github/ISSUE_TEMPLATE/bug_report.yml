@@ -1,0 +1,42 @@
+name: Bug report
+description: The app crashes, the redirect or notifications don't work, a screen looks wrong…
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open …
+        2. Tap …
+        3. See …
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Phone and Android version
+      placeholder: Xiaomi Redmi Note 10 5G, Android 13 (MIUI 14)
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: App version
+      description: Settings → About → Version
+    validations:
+      required: true
+  - type: checkboxes
+    id: setup
+    attributes:
+      label: Setup
+      description: Settings → Setup shows the status of each item.
+      options:
+        - label: All setup items show a green check
