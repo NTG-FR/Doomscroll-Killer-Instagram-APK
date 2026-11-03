@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Doomscroll Killer</string>
+    <!-- Label of the feed's home screen icon. -->
+    <string name="feed_label">Insta</string>
 
     <!-- System services -->
     <string name="accessibility_label">Doomscroll Killer – Instagram redirect</string>
@@ -39,7 +41,7 @@
     <string name="onb_setup_body">A few permissions so the redirect and notifications work. You can change them later in Settings.</string>
 
     <string name="onb_done_title">You\'re all set</string>
-    <string name="onb_done_body">Log in to Instagram once and you\'re good to go. Tip: hide the official Instagram app\'s icon so you never open it by habit.</string>
+    <string name="onb_done_body">You now have two icons: \"Insta\" opens your feed, \"Doomscroll Killer\" holds these settings. Log in to Instagram once in Insta, then hide the official Instagram app\'s icon so you never open it by habit.</string>
     <string name="onb_done_button">Log in to Instagram</string>
 
     <!-- Setup checklist -->
@@ -58,7 +60,11 @@
     <string name="setup_no_instagram_desc">The feed works without it. Install it (and hide its icon) only if you want notifications.</string>
 
     <string name="disclosure_title">Accessibility permission</string>
-    <string name="disclosure_body">Doomscroll Killer uses Android\'s accessibility service for one thing: noticing when the official Instagram app opens, so it can send you to the distraction-free feed instead.\n\nIt cannot read what is on your screen, it only listens to Instagram, and nothing ever leaves your phone.\n\nOn the next screen, open \"Doomscroll Killer – Instagram redirect\" and turn it on.</string>
+    <string name="disclosure_body">Doomscroll Killer uses Android\'s accessibility service for one thing: noticing when the official Instagram app opens, so it can send you to the distraction-free feed instead.\n\nIt cannot read what is on your screen, it only listens to Instagram, and nothing ever leaves your phone.</string>
+    <string name="disclosure_steps_title">On the next screen</string>
+    <string name="disclosure_steps_xiaomi">1. Tap \"Downloaded apps\".\n2. Tap \"Doomscroll Killer – Instagram redirect\".\n3. Turn it on, then come back with the Back button.</string>
+    <string name="disclosure_steps_samsung">1. Tap \"Installed apps\".\n2. Tap \"Doomscroll Killer – Instagram redirect\".\n3. Turn it on, then come back with the Back button.</string>
+    <string name="disclosure_steps_generic">1. Open \"Downloaded apps\" (it may be called \"Installed apps\" or \"Installed services\").\n2. Tap \"Doomscroll Killer – Instagram redirect\".\n3. Turn it on, then come back with the Back button.</string>
 
     <!-- Device tips -->
     <string name="tips_title">Tips for %1$s phones</string>
@@ -73,8 +79,6 @@
     <string name="tips_other">• Remove Instagram\'s icon from your home screen (long-press → Remove, not Uninstall) or put it in a folder: it stays installed for notifications.</string>
 
     <!-- Feed -->
-    <string name="feed_status_ok">Protection on</string>
-    <string name="feed_status_attention">Protection needs attention</string>
     <string name="feed_banner_attention">Some protections are off. Tap to fix.</string>
     <string name="feed_error_title">Can\'t reach Instagram</string>
     <string name="feed_error_body">Check your connection and try again.</string>
@@ -82,7 +86,6 @@
     <string name="feed_reel_blocked">Reels are blocked</string>
 
     <!-- Settings -->
-    <string name="settings_title">Settings</string>
     <string name="settings_status_ok_title">You\'re protected</string>
     <string name="settings_status_ok_body">The Instagram app redirects here and notifications are relayed.</string>
     <string name="settings_status_attention_title">Action needed</string>
@@ -96,7 +99,8 @@
     <string name="settings_redirect_desc">Turn off to use the official app for a while (e.g. to post a Reel).</string>
     <string name="settings_relay">Relay notifications</string>
     <string name="settings_relay_desc">Instagram notifications show up here and open the right conversation.</string>
-    <string name="settings_reload">Reload feed</string>
+    <string name="settings_open_feed">Open Insta</string>
+    <string name="settings_open_feed_desc">Your feed, without the doomscroll. Also on your home screen.</string>
     <string name="settings_logout">Log out of Instagram</string>
     <string name="settings_logout_confirm">Log out of Instagram in Doomscroll Killer? You will need to log in again.</string>
     <string name="settings_logout_action">Log out</string>

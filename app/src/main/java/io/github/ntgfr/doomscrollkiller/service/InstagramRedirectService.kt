@@ -1,12 +1,11 @@
 package io.github.ntgfr.doomscrollkiller.service
 
 import android.accessibilityservice.AccessibilityService
-import android.os.SystemClock
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import io.github.ntgfr.doomscrollkiller.data.AppSettings
 import io.github.ntgfr.doomscrollkiller.data.SettingsRepository
-import io.github.ntgfr.doomscrollkiller.ui.MainActivity
+import io.github.ntgfr.doomscrollkiller.ui.FeedActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -24,8 +23,6 @@ class InstagramRedirectService : AccessibilityService() {
     companion object {
         private const val TAG = "DoomscrollKiller"
         const val INSTAGRAM_PACKAGE = "com.instagram.android"
-        /** Ignore the burst of events Instagram sends while it is being closed. */
-        private const val COOLDOWN_MS = 1_500L
 
         /**
          * True while the service is actually running in this process. A service can be ticked in the
@@ -40,7 +37,6 @@ class InstagramRedirectService : AccessibilityService() {
 
     @Volatile
     private var settings = AppSettings()
-    private var lastRedirectAt = 0L
 
     override fun onServiceConnected() {
         super.onServiceConnected()
@@ -56,13 +52,10 @@ class InstagramRedirectService : AccessibilityService() {
         if (event.packageName?.toString() != INSTAGRAM_PACKAGE) return
         if (!settings.instagramRedirect) return
 
-        val now = SystemClock.uptimeMillis()
-        if (now - lastRedirectAt < COOLDOWN_MS) return
-        lastRedirectAt = now
-
-        // Leave Instagram, then open the built-in feed on top.
-        performGlobalAction(GLOBAL_ACTION_HOME)
-        startActivity(MainActivity.feedIntent(this))
+        // Every time an Instagram window shows up, bring the built-in feed on top of it. No delay and no
+        // "go home" step: opening Instagram again (even repeatedly) always lands back here, and a late
+        // event from Instagram can only re-show our feed, which is harmless.
+        startActivity(FeedActivity.intent(this))
     }
 
     override fun onInterrupt() = Unit

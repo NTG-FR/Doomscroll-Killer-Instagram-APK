@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Debug builds install next to the release: give them distinct names so they are easy to tell apart. -->
+<resources>
+    <string name="app_name">Doomscroll Killer (debug)</string>
+    <string name="feed_label">Insta (debug)</string>
+    <string name="accessibility_label">Doomscroll Killer (debug) – Instagram redirect</string>
+    <string name="notification_relay_label">Doomscroll Killer (debug) – Instagram notifications</string>
+</resources>

@@ -45,6 +45,7 @@ Doomscroll Killer takes a different approach: **it never shows you the endless p
 
 | | |
 |---|---|
+| 📱 **Feels like Instagram** | One install, two icons: **Insta** opens your feed full screen, with nothing in the way; **Doomscroll Killer** holds the setup and settings. |
 | 👥 **Following only** | The feed opens on Instagram's chronological *Following* feed. The algorithmic *For you* home is skipped automatically. |
 | 🚫 **No Reels, no Explore** | The Reels tab, Reels in the feed and the Explore grid are removed before they are drawn. Search still works. |
 | 💬 **Messages work** | DMs, stories, profiles and posting photos work as usual. A Reel a friend sends you plays, but you can't scroll to the next one. |
@@ -63,7 +64,7 @@ flowchart LR
     D --> E[instagram.com in a protected view<br/>Following feed, no Reels, no Explore, no ads]
 ```
 
-1. **The feed** is instagram.com, shown inside the app. Filtering rules ([`InstagramWebRules.kt`](app/src/main/java/io/github/ntgfr/doomscrollkiller/web/InstagramWebRules.kt)) hide Reels, Explore, ads and suggestions with CSS and a small script. The browser removes them *before* drawing: no flicker.
+1. **The feed** (the **Insta** icon) is instagram.com, shown full screen inside the app. Filtering rules ([`InstagramWebRules.kt`](app/src/main/java/io/github/ntgfr/doomscrollkiller/web/InstagramWebRules.kt)) hide Reels, Explore, ads and suggestions with CSS and a small script. The browser removes them *before* drawing: no flicker.
 2. **The official Instagram app** stays installed, ideally with its icon hidden, only to receive push notifications. An accessibility service notices when it comes to the foreground and sends you back to Doomscroll Killer. It cannot read your screen.
 3. **Notifications** from the official app are re-posted as Doomscroll Killer notifications and the originals removed, so tapping one opens the built-in feed at the right page.
 
@@ -81,7 +82,7 @@ flowchart LR
      <br/>On **Android 13+**, if the switch is greyed out ("Restricted setting"): *App info* → **⋮** → **Allow restricted settings**, then try again. Android does this for every app installed from a file.
    - **Read Instagram notifications** and **Show notifications**.
    - **Run in the background** (battery optimisation off).
-3. Log in to Instagram once inside the app.
+3. Open the new **Insta** icon and log in to Instagram once. **Doomscroll Killer** (the other icon) keeps the settings.
 4. Hide the official Instagram app's icon (don't uninstall it if you want notifications). The app shows how to do this on your phone brand.
 
 > **Xiaomi, Samsung, Huawei, OnePlus, Oppo, Vivo…** These phones stop background apps aggressively. The app shows the extra steps for your brand, and [dontkillmyapp.com](https://dontkillmyapp.com) has detailed guides.
@@ -117,7 +118,7 @@ Only the official app can receive Instagram's push notifications. A web page sho
 <details>
 <summary><b>I need the official app for a moment (e.g. to post a Reel).</b></summary>
 
-Settings → turn off **Redirect the Instagram app**, then turn it back on.
+In **Doomscroll Killer**, turn off **Redirect the Instagram app**, then turn it back on.
 </details>
 
 <details>
@@ -135,7 +136,7 @@ Most rules rely on page structure and link addresses, which are the same in ever
 <details>
 <summary><b>The redirect stopped working.</b></summary>
 
-Your phone probably stopped the service (common after swiping the app away from Recents, or after an update). The shield at the top of the feed turns orange: tap it and follow the steps.
+Your phone probably stopped the service (common after swiping the app away from Recents, or after an update). A banner appears at the top of Insta: tap it and follow the steps.
 </details>
 
 ## Build from source

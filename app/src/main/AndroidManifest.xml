@@ -38,6 +38,23 @@
             </intent-filter>
         </activity>
 
+        <!-- "Insta": the built-in feed, full screen, with its own home screen icon and task. -->
+        <activity
+            android:name=".ui.FeedActivity"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden|uiMode"
+            android:exported="true"
+            android:icon="@mipmap/ic_feed"
+            android:label="@string/feed_label"
+            android:launchMode="singleTask"
+            android:roundIcon="@mipmap/ic_feed"
+            android:taskAffinity="${applicationId}.feed"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <!-- Redirect: notices when the official Instagram app opens. Only the system can bind to it. -->
         <service
             android:name=".service.InstagramRedirectService"

@@ -18,7 +18,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -42,6 +41,7 @@ import io.github.ntgfr.doomscrollkiller.data.AppSettings
 import io.github.ntgfr.doomscrollkiller.data.SettingsRepository
 import io.github.ntgfr.doomscrollkiller.system.DeviceBrand
 import io.github.ntgfr.doomscrollkiller.system.SetupStatus
+import io.github.ntgfr.doomscrollkiller.ui.components.BrandMark
 import io.github.ntgfr.doomscrollkiller.ui.components.DeviceTipsCard
 import io.github.ntgfr.doomscrollkiller.ui.components.Group
 import io.github.ntgfr.doomscrollkiller.ui.components.GroupDivider
@@ -60,8 +60,7 @@ fun SettingsScreen(
     settings: AppSettings,
     status: SetupStatus,
     repo: SettingsRepository,
-    onBack: () -> Unit,
-    onReloadFeed: () -> Unit,
+    onOpenFeed: () -> Unit,
     onLogOut: () -> Unit,
     onOpenCaptures: () -> Unit,
     onReplayIntro: () -> Unit,
@@ -76,13 +75,12 @@ fun SettingsScreen(
     Surface(Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
         Column(Modifier.fillMaxSize()) {
             Row(
-                Modifier.fillMaxWidth().statusBarsPadding().height(56.dp).padding(horizontal = 4.dp),
+                Modifier.fillMaxWidth().statusBarsPadding().height(64.dp).padding(horizontal = 20.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                IconButton(onClick = onBack) {
-                    Icon(painterResource(R.drawable.ic_arrow_back), contentDescription = stringResource(R.string.action_back))
-                }
-                Text(stringResource(R.string.settings_title), style = MaterialTheme.typography.titleLarge)
+                BrandMark(size = 32.dp)
+                Spacer(Modifier.width(12.dp))
+                Text(stringResource(R.string.app_name), style = MaterialTheme.typography.titleLarge)
             }
 
             Column(Modifier.weight(1f).verticalScroll(rememberScrollState()).navigationBarsPadding().padding(bottom = 24.dp)) {
@@ -93,6 +91,11 @@ fun SettingsScreen(
 
                 SectionTitle(stringResource(R.string.settings_section_instagram))
                 Group {
+                    LinkRow(
+                        R.drawable.ic_camera, stringResource(R.string.settings_open_feed),
+                        stringResource(R.string.settings_open_feed_desc), onClick = onOpenFeed,
+                    )
+                    GroupDivider()
                     SwitchRow(
                         R.drawable.ic_block, stringResource(R.string.settings_redirect),
                         stringResource(R.string.settings_redirect_desc), settings.instagramRedirect,
@@ -102,8 +105,6 @@ fun SettingsScreen(
                         R.drawable.ic_notifications, stringResource(R.string.settings_relay),
                         stringResource(R.string.settings_relay_desc), settings.notificationRelay,
                     ) { scope.launch { repo.setNotificationRelay(it) } }
-                    GroupDivider()
-                    LinkRow(R.drawable.ic_refresh, stringResource(R.string.settings_reload), onClick = onReloadFeed)
                     GroupDivider()
                     LinkRow(R.drawable.ic_logout, stringResource(R.string.settings_logout)) { confirmLogout = true }
                 }

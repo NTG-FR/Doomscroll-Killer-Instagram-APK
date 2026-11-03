@@ -10,7 +10,7 @@ import io.github.ntgfr.doomscrollkiller.R
 import io.github.ntgfr.doomscrollkiller.data.AppSettings
 import io.github.ntgfr.doomscrollkiller.data.SettingsRepository
 import io.github.ntgfr.doomscrollkiller.service.InstagramRedirectService
-import io.github.ntgfr.doomscrollkiller.ui.MainActivity
+import io.github.ntgfr.doomscrollkiller.ui.FeedActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -80,7 +80,7 @@ class InstagramNotificationRelay : NotificationListenerService() {
         val id = sbn.key.hashCode()
         val url = NotificationRouting.targetUrl(isMessage, n.group)
         val open = PendingIntent.getActivity(
-            this, id, MainActivity.feedIntent(this, url),
+            this, id, FeedActivity.intent(this, url),
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
         )
         val copy = Notification.Builder(this, channelId)

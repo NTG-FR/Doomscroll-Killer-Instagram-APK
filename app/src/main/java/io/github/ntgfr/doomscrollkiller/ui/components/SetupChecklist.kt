@@ -8,6 +8,7 @@ import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -70,7 +71,7 @@ fun SetupChecklist(status: SetupStatus) {
     var showDisclosure by rememberSaveable { mutableStateOf(false) }
     val notificationPermission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
         // Android stops showing the dialog after two refusals: send the user to the settings instead.
-        if (!granted) context.startActivity(SetupChecks.appNotificationSettings(context))
+        if (!granted) context.startSafely(SetupChecks.appNotificationSettings(context), SetupChecks.appDetails(context))
     }
 
     Group {
@@ -100,7 +101,7 @@ fun SetupChecklist(status: SetupStatus) {
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
-                    TextButton(onClick = { context.startActivity(SetupChecks.appDetails(context)) }) {
+                    TextButton(onClick = { context.startSafely(SetupChecks.appDetails(context)) }) {
                         Text(stringResource(R.string.setup_restricted_button))
                     }
                 }
@@ -111,7 +112,13 @@ fun SetupChecklist(status: SetupStatus) {
                 title = stringResource(R.string.setup_notif_access_title),
                 description = stringResource(R.string.setup_notif_access_desc),
                 done = status.notificationAccess,
-                onFix = { context.startActivity(SetupChecks.notificationAccessSettings(context)) },
+                onFix = {
+                    context.startSafely(
+                        SetupChecks.notificationAccessSettings(context),
+                        fallback = Intent(android.provider.Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS)
+                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                    )
+                },
             )
             GroupDivider()
             SetupItem(
@@ -123,7 +130,7 @@ fun SetupChecklist(status: SetupStatus) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                         notificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
                     } else {
-                        context.startActivity(SetupChecks.appNotificationSettings(context))
+                        context.startSafely(SetupChecks.appNotificationSettings(context), SetupChecks.appDetails(context))
                     }
                 },
             )
@@ -144,11 +151,17 @@ fun SetupChecklist(status: SetupStatus) {
             onDismissRequest = { showDisclosure = false },
             icon = { Icon(painterResource(R.drawable.ic_accessibility), contentDescription = null) },
             title = { Text(stringResource(R.string.disclosure_title)) },
-            text = { Text(stringResource(R.string.disclosure_body)) },
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                    Text(stringResource(R.string.disclosure_body))
+                    Text(stringResource(R.string.disclosure_steps_title), style = MaterialTheme.typography.titleSmall)
+                    Text(stringResource(accessibilitySteps(DeviceBrand.fromManufacturer(Build.MANUFACTURER))))
+                }
+            },
             confirmButton = {
                 TextButton(onClick = {
                     showDisclosure = false
-                    context.startActivity(SetupChecks.accessibilitySettings())
+                    context.startSafely(SetupChecks.accessibilitySettings(context))
                 }) { Text(stringResource(R.string.action_open_settings)) }
             },
             dismissButton = {
@@ -189,6 +202,13 @@ private fun SetupItem(
         }
         if (!done) Column(Modifier.padding(start = 66.dp, end = 16.dp, bottom = 8.dp)) { extra() }
     }
+}
+
+/** Where the accessibility switch lives: the intermediate screen differs between phone brands. */
+private fun accessibilitySteps(brand: DeviceBrand): Int = when (brand) {
+    DeviceBrand.XIAOMI -> R.string.disclosure_steps_xiaomi
+    DeviceBrand.SAMSUNG -> R.string.disclosure_steps_samsung
+    else -> R.string.disclosure_steps_generic
 }
 
 /** Brand-specific advice (background limits, hiding Instagram's icon), with a link to the full guide. */

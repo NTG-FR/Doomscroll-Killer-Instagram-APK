@@ -9,6 +9,7 @@ import android.content.pm.PackageInstaller
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
+import android.os.Bundle
 import android.os.PowerManager
 import android.provider.Settings
 import io.github.ntgfr.doomscrollkiller.notifications.InstagramNotificationRelay
@@ -89,7 +90,17 @@ object SetupChecks {
 
     // ------------------------------------------------------------------ Intents
 
-    fun accessibilitySettings() = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS).newTask()
+    /**
+     * Accessibility settings. Apps may not open their own service's switch directly, but these extras ask
+     * the Settings app to scroll to and highlight our entry (honoured by many phones, ignored by others).
+     */
+    fun accessibilitySettings(context: Context): Intent {
+        val key = ComponentName(context, InstagramRedirectService::class.java).flattenToString()
+        return Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
+            .putExtra(":settings:fragment_args_key", key)
+            .putExtra(":settings:show_fragment_args", Bundle().apply { putString(":settings:fragment_args_key", key) })
+            .newTask()
+    }
 
     /** Opens our own entry directly when the system allows it (Android 11+), else the full list. */
     fun notificationAccessSettings(context: Context): Intent =

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ApplicationInfo
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
@@ -35,7 +36,22 @@ class InstagramWebController(
     private val context: Context,
     private val openFileChooser: (Intent, ValueCallback<Array<Uri>>) -> Boolean,
 ) {
+    companion object {
+        /** Bumped on every log out, so a feed that is already open knows it must reload. */
+        @Volatile
+        var sessionGeneration = 0
+            private set
+
+        /** Logs out of Instagram: clears cookies and site storage (shared by every WebView of the app). */
+        fun logOut() {
+            CookieManager.getInstance().removeAllCookies { CookieManager.getInstance().flush() }
+            WebStorage.getInstance().deleteAllData()
+            sessionGeneration++
+        }
+    }
+
     val webView: WebView = WebView(context)
+    private var seenGeneration = sessionGeneration
 
     // Compose state, read by the feed screen.
     var progress by mutableIntStateOf(0)
@@ -50,12 +66,35 @@ class InstagramWebController(
     /** Anti-loop for the "For you" -> "Following" redirect. */
     private var lastHomeRedirectAt = 0L
 
+    /**
+     * Work waiting for the WebView to be on screen with a real size. A page loaded while the WebView is
+     * hidden (e.g. during onboarding) sees a 0x0 screen: Instagram then sizes some windows (like its cookie
+     * consent) to zero height, leaving only their dark backdrop, which blocks every tap.
+     */
+    private var pendingWhenVisible: (() -> Unit)? = null
+
     init {
         configure()
+        webView.addOnLayoutChangeListener { v, _, _, _, _, _, _, _, _ ->
+            if (v.width > 0 && v.height > 0) {
+                pendingWhenVisible?.let { task ->
+                    pendingWhenVisible = null
+                    v.post(task) // not during layout
+                }
+            }
+        }
+    }
+
+    private fun whenVisible(task: () -> Unit) {
+        if (webView.isAttachedToWindow && webView.width > 0 && webView.height > 0) task() else pendingWhenVisible = task
     }
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun configure() {
+        // Debug builds only: lets Chrome DevTools (chrome://inspect) inspect the page while fixing rules.
+        if (context.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0) {
+            WebView.setWebContentsDebuggingEnabled(true)
+        }
         CookieManager.getInstance().setAcceptCookie(true)
         CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true)
         webView.settings.apply {
@@ -68,18 +107,23 @@ class InstagramWebController(
         webView.webChromeClient = ChromeClient()
     }
 
-    /** Loads the given page, or restores the previous session, or opens the Following feed. */
+    /**
+     * Loads the given page, or restores the previous session, or opens the Following feed,
+     * as soon as the WebView is on screen.
+     */
     fun start(savedState: Bundle?, url: String?) {
-        when {
-            url != null -> load(url)
-            savedState != null && webView.restoreState(savedState) != null -> Unit
-            else -> load(InstagramWebRules.HOME_URL)
+        whenVisible {
+            when {
+                url != null -> webView.loadUrl(url)
+                savedState != null && webView.restoreState(savedState) != null -> Unit
+                else -> webView.loadUrl(InstagramWebRules.HOME_URL)
+            }
         }
     }
 
     fun load(url: String) {
         hasError = false
-        webView.loadUrl(url)
+        whenVisible { webView.loadUrl(url) }
     }
 
     fun reload() {
@@ -107,10 +151,10 @@ class InstagramWebController(
     /** Keeps the login on disk. */
     fun persistSession() = CookieManager.getInstance().flush()
 
-    /** Logs out of Instagram: clears cookies and site storage, then shows the login page. */
-    fun logOut() {
-        CookieManager.getInstance().removeAllCookies { CookieManager.getInstance().flush() }
-        WebStorage.getInstance().deleteAllData()
+    /** After a log out from the settings, starts again from a clean page. */
+    fun reloadIfLoggedOut() {
+        if (seenGeneration == sessionGeneration) return
+        seenGeneration = sessionGeneration
         webView.clearCache(true)
         webView.clearHistory()
         load(InstagramWebRules.HOME_URL)
